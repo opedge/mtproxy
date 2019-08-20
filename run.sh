@@ -95,5 +95,4 @@ echo "[*]   Make sure to fix the links in case you run the proxy on a different 
 echo
 echo '[+] Starting proxy...'
 sleep 1
-exec /usr/local/bin/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 --aes-pwd /etc/telegram/hello-explorers-how-are-you-doing -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
-sleep 1000
+exec /usr/local/bin/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
