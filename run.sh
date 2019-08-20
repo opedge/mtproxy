@@ -67,6 +67,12 @@ curl -s https://core.telegram.org/getProxyConfig -o /etc/telegram/backend.conf |
 }
 CONFIG=/etc/telegram/backend.conf
 
+REMOTE_SECRET=/etc/telegram/remotesecret
+curl -s https://core.telegram.org/getProxySecret -o ${REMOTE_SECRET} || {
+  echo '[F] Cannot download proxy secret from Telegram servers.'
+  exit 5
+}
+
 IP="$(curl -s -4 "https://digitalresistance.dog/myIp")"
 INTERNAL_IP="$(ip -4 route get 8.8.8.8 | grep '^8\.8\.8\.8\s' | grep -Po 'src\s+\d+\.\d+\.\d+\.\d+' | awk '{print $2}')"
 
@@ -95,4 +101,4 @@ echo "[*]   Make sure to fix the links in case you run the proxy on a different 
 echo
 echo '[+] Starting proxy...'
 sleep 1
-exec /usr/local/bin/mtproto-proxy -p 2398 -H 8443 -M "$WORKERS" -C 60000 --allow-skip-dh -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
+exec /usr/local/bin/mtproto-proxy -R -p 2398 -H 8443 -M "$WORKERS" -C 60000 --aes-pwd ${REMOTE_SECRET} --allow-skip-dh -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
