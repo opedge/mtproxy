@@ -95,4 +95,4 @@ echo "[*]   Make sure to fix the links in case you run the proxy on a different 
 echo
 echo '[+] Starting proxy...'
 sleep 1
-exec /usr/local/bin/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
+exec /usr/local/bin/mtproto-proxy -p 2398 -H 8443 -M "$WORKERS" -C 60000 --allow-skip-dh -u root $CONFIG --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD

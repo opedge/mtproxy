@@ -23,4 +23,6 @@ RUN cd /opt && \
 
 COPY run.sh /
 
+EXPOSE 8443
+
 CMD ["./run.sh"]
